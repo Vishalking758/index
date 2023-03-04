@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheet Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+        integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        body {
+            height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes rotate {
+            from {
+                -webkit-transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        .load {
+            width: 20px;
+            height: 20px;
+            border: solid 3px #020202;
+            border-radius: 50%;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            -webkit-transition: all 0.5s ease-in;
+            -webkit-animation-name: rotate;
+            -webkit-animation-duration: 1.0s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-timing-function: linear;
+            transition: all 0.5s ease-in;
+            animation-name: rotate;
+            animation-duration: 1.0s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        #loading {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="col-6">
+        <form method="post" class="shadow" name="google-sheet">
+
+            <div class="form-group name  p-3 bg-body rounded">
+                <label for="Name" class=" rounded">Your Name</label>
+                <input class="form-control" type="text" name="Name" required>
+            </div>
+
+            <div class="form-group email  p-3 bg-body rounded">
+                <label for="Email" class=" rounded">Your Email</label>
+                <input class="form-control" type="email" name="Email" required>
+            </div>
+
+
+            <div class="form-group phone  p-3 bg-body rounded">
+                <label for="Phone" class=" rounded">Phone number</label>
+                <input class="form-control" type="text" name="Phone" required>
+
+            </div>
+            <br>
+            <div class="text-center p-3"><button type="submit" class="btn btn-primary">Send</button></div>
+        </form>
+        <br>
+        <div class='alert alert-secondary justify-content-center' id="loading" role='alert'>
+            <div class="load" id="load"></div>
+        </div>
+    </div>
+
+    <script>
+
+
+
+        // $(document).ready(function () {
+        //     const scriptURL = 'https://script.google.com/macros/s/AKfycbwGew-17VP8g1WBELCPtFI1iWLNtQ6axTLkY-l6bCcTr2_OfaGSCVBdznIwjv0kKJpYqA/exec';
+        //     const form = $('form[name="google-sheet"]');
+        //     form.submit(function (e) {
+        //         e.preventDefault();
+        //         $("#loading").css("display", "flex");
+        //         $.ajax({
+        //             url: scriptURL,
+        //             type: "POST",
+        //             data: form.serialize(),
+        //             success: function () {
+        //              $("#loading").css("display", "none");
+        //                 $("#loading").html("<b>Thank You for providing the details !</b>");
+        //             },
+        //             error: function (error) {
+        //                 console.error('Error!', error.message);
+        //             }
+        //         });
+        //         return form[0].reset();
+        //     });
+        // });
+
+
+        // const scriptURL = 'https://script.google.com/macros/s/AKfycbwGew-17VP8g1WBELCPtFI1iWLNtQ6axTLkY-l6bCcTr2_OfaGSCVBdznIwjv0kKJpYqA/exec';
+        // const form = document.querySelector('form[name="google-sheet"]');
+        // form.addEventListener("submit", function (e) {
+        //     e.preventDefault();
+        //     document.querySelector("#loading").style.display = "flex";
+        //     fetch(scriptURL, {
+        //         method: "POST",
+        //         body: new FormData(form)
+        //     })
+        //         .then(function () {
+        //             document.querySelector("#loading").innerHTML = "<b>Thank You for providing the details !</b>";
+        //         })
+        //         .catch(function (error) {
+        //             console.error("Error!", error.message);
+        //         });
+        //     form.reset();
+        // });
+
+
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwGew-17VP8g1WBELCPtFI1iWLNtQ6axTLkY-l6bCcTr2_OfaGSCVBdznIwjv0kKJpYqA/exec';
+        const form = document.querySelector('form[name="google-sheet"]');
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            document.querySelector("#loading").style.display = "flex";
+            form.style.display = "none";
+            fetch(scriptURL, {
+                method: "POST",
+                body: new FormData(form)
+            })
+                .then(function () {
+                    document.querySelector("#loading").innerHTML = "<b>Thank You for providing the details !</b>";
+                    form.reset();
+                    setTimeout(function () {
+                     document.querySelector("#loading").innerHTML = '<div class="load" id="load"></div>';
+                     document.querySelector("#loading").style.display = "none";
+                     form.style.display = "block";
+                    }, 3000);
+                })
+                .catch(error => {
+                    document.querySelector("#loading").error("Error!", error.message);
+                });
+        });
+
+    </script>
+</body>
+
+</html>

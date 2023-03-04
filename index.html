@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/Snapchat.jpg">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="images/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <title>Home</title>
+
+</head>
+
+<body>
+    <div id="cursor"></div>
+    <div id="cursor-border"></div>
+
+
+
+
+
+    <div class="container p-5">
+        <div class="h1 text-white">index page </div>
+
+        <div class="row justify-content-center">
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-6 p-4">
+                <div class="card bg-dark text-white shadow">
+                    <img class="card-img" src="images/takken.png" alt="Card image">
+                    <div class="card-img-top">
+                        <h5 class="card-title">takken</h5>
+                        <p class="card-text">this is gaming site</p>
+                        <a href="https://dark2022.000webhostapp.com" class="btn btn-primary">Go to site</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 p-4">
+                <div class="card bg-dark text-white shadow">
+                    <img class="card-img" src="images/ignou.png" alt="Card image">
+                    <div class="card-img-top">
+                        <h5 class="card-title">ignou</h5>
+                        <p class="card-text">clone of <strong>IGNOU</strong> using bootstrap 5 </p>
+                        <a href="https://vishalking758.github.io/ignou" class="btn btn-primary">Go to site</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-6 p-4">
+                <div class="card bg-dark text-white shadow">
+                    <img class="card-img" src="images/kawasaki.png" alt="Card image">
+                    <div class="card-img-top">
+                        <h5 class="card-title">kawasaki</h5>
+                        <p class="card-text">Bikes</p>
+                        <a href="kawasaki/index.html" class="btn btn-primary">Go to site</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 p-4">
+                <div class="card bg-dark text-white shadow">
+                    <img class="card-img" src="images/form.png" alt="Card image">
+                    <div class="card-img-top">
+                        <h5 class="card-title">form</h5>
+                        <p class="card-text">form for send data to backend</p>
+                        <a href="images/main-form.html" class="btn btn-primary">Go to site</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script>
+        const cursor = document.querySelector("#cursor");
+        const cursorBorder = document.querySelector("#cursor-border");
+        const cursorPos = { x: 0, y: 0 };
+        const cursorBorderPos = { x: 0, y: 0 };
+
+        document.addEventListener("mousemove", (e) => {
+            cursorPos.x = e.clientX;
+            cursorPos.y = e.clientY;
+
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+
+        requestAnimationFrame(function loop() {
+            const easting = 8;
+            cursorBorderPos.x += (cursorPos.x - cursorBorderPos.x) / easting;
+            cursorBorderPos.y += (cursorPos.y - cursorBorderPos.y) / easting;
+
+            cursorBorder.style.transform = `translate(${cursorBorderPos.x}px, ${cursorBorderPos.y}px)`;
+            requestAnimationFrame(loop);
+        });
+
+        document.querySelectorAll("[data-cursor]").forEach((item) => {
+            item.addEventListener("mouseover", (e) => {
+                if (item.dataset.cursor === "pointer") {
+                    cursorBorder.style.backgroundColor = "rgba(255, 255, 255, .6)";
+                    cursorBorder.style.setProperty("--size", "30px");
+                }
+                if (item.dataset.cursor === "pointer2") {
+                    cursorBorder.style.backgroundColor = "white";
+                    cursorBorder.style.mixBlendMode = "difference";
+                    cursorBorder.style.setProperty("--size", "80px");
+                }
+            });
+            item.addEventListener("mouseout", (e) => {
+                cursorBorder.style.backgroundColor = "unset";
+                cursorBorder.style.mixBlendMode = "unset";
+                cursorBorder.style.setProperty("--size", "50px");
+            });
+        });
+    </script>
+</body>
+
+</html>
